@@ -13,9 +13,12 @@ import { ILoginSchema, loginSchema } from "./LoginFormSchema";
 import { FormInput } from "../../../../components";
 import AuthLayout from "../AuthLayout/AuthLayout";
 import { useLoginMutation } from "../../Auth.Api";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
-  const [login, { isLoading }] = useLoginMutation();
+  const router = useRouter();
+  const [login, { isLoading, isSuccess }] = useLoginMutation();
 
   const methods = useForm<ILoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -26,6 +29,12 @@ export default function LoginForm() {
   const onSubmitHandler: SubmitHandler<ILoginSchema> = (values) => {
     login(values);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/protected");
+    }
+  }, [isSuccess, router]);
 
   return (
     <AuthLayout>
