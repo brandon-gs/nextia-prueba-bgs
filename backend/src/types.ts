@@ -5,6 +5,8 @@ declare global {
       FRONTEND_URL: string;
       // DATABASE
       MONGODB_URL: string;
+      // JWT
+      JWT_ACCESS_SECRET: string;
     }
   }
 }
