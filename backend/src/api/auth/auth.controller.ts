@@ -73,3 +73,8 @@ export function login(req: Request, res: Response) {
 
   res.status(200).json({ log: "Authenticated" });
 }
+
+export function logout(req: Request, res: Response) {
+  res.clearCookie(cookiesConfig.access.name);
+  res.status(200).json({});
+}
