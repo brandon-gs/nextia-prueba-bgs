@@ -4,6 +4,7 @@ specifiers:
   '@types/cookie-parser': ^1.4.3
   '@types/cors': ^2.8.13
   '@types/express': ^4.17.15
+  '@types/express-slow-down': ^1.3.2
   '@types/morgan': ^1.9.4
   '@types/node': ^18.11.18
   '@typescript-eslint/eslint-plugin': ^5.48.1
@@ -16,6 +17,7 @@ specifiers:
   eslint-import-resolver-typescript: ^3.5.2
   eslint-plugin-import: ^2.26.0
   express: ^4.18.2
+  express-slow-down: ^1.5.0
   morgan: ^1.10.0
   nodemon: ^2.0.20
   prettier: ^2.8.2
@@ -27,12 +29,14 @@ dependencies:
   cors: 2.8.5
   dotenv: 16.0.3
   express: 4.18.2
+  express-slow-down: 1.5.0
   morgan: 1.10.0
 
 devDependencies:
   '@types/cookie-parser': 1.4.3
   '@types/cors': 2.8.13
   '@types/express': 4.17.15
+  '@types/express-slow-down': 1.3.2
   '@types/morgan': 1.9.4
   '@types/node': 18.11.18
   '@typescript-eslint/eslint-plugin': 5.48.1_3jon24igvnqaqexgwtxk6nkpse
@@ -188,6 +192,12 @@ packages:
       '@types/node': 18.11.18
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
+    dev: true
+
+  /@types/express-slow-down/1.3.2:
+    resolution: {integrity: sha512-Jw/orNMX+htFMYMugjhLotS5eRkdId4V5/89vqNXoUfxaHBU8VVIshItDh5YuWeyGeKuPli2fh94ORjYz/dkxA==}
+    dependencies:
+      '@types/express': 4.17.15
     dev: true
 
   /@types/express/4.17.15:
@@ -561,6 +571,11 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /clone/1.0.4:
+    resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
+    engines: {node: '>=0.8'}
+    dev: false
+
   /color-convert/2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
     engines: {node: '>=7.0.0'}
@@ -683,6 +698,12 @@ packages:
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
     dev: true
+
+  /defaults/1.0.4:
+    resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
+    dependencies:
+      clone: 1.0.4
+    dev: false
 
   /define-lazy-prop/2.0.0:
     resolution: {integrity: sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==}
@@ -1071,6 +1092,12 @@ packages:
   /etag/1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /express-slow-down/1.5.0:
+    resolution: {integrity: sha512-GCoa2a+mf7CE7C00TIoPMbcgQSXxEVolSAbP97uHyzVy87ssp0/IDtJ/GBxjv+gnfM2R1l2QcEfYixFJK75n7w==}
+    dependencies:
+      defaults: 1.0.4
     dev: false
 
   /express/4.18.2:

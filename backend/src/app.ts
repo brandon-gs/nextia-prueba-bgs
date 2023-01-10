@@ -3,6 +3,8 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
+import * as middlewares from "./middlewares";
+
 const app = express();
 
 app.use(morgan("dev"));
@@ -14,6 +16,7 @@ app.use(
   }),
 );
 
+app.use(middlewares.speedLimiter);
 app.get("/", (req, res) => {
   return res.json({ message: "API working" });
 });
