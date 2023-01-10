@@ -7,6 +7,9 @@ import * as middlewares from "./middlewares";
 
 const app = express();
 
+app.set("trust proxy", 1);
+app.enable("trust proxy");
+
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(
@@ -15,6 +18,7 @@ app.use(
     credentials: true,
   }),
 );
+app.use(express.json());
 
 app.use(middlewares.speedLimiter);
 app.get("/", (req, res) => {
