@@ -8,8 +8,8 @@ export function makeStore() {
     reducer: reducers,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({})
-        .concat(rtkQueryErrorLogger)
-        .concat(storeMiddlewares),
+        .concat(storeMiddlewares)
+        .concat(rtkQueryErrorLogger),
   });
 }
 
