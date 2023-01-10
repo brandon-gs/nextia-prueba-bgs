@@ -18,6 +18,7 @@ specifiers:
   eslint: 8.31.0
   eslint-config-next: 13.1.1
   next: 13.1.1
+  notistack: ^2.0.8
   react: 18.2.0
   react-dom: 18.2.0
   react-hook-form: ^7.41.5
@@ -44,6 +45,7 @@ dependencies:
   eslint: 8.31.0
   eslint-config-next: 13.1.1_iukboom6ndih5an6iafl45j2fe
   next: 13.1.1_biqbaboplfbrettd7655fr4n2y
+  notistack: 2.0.8_22lfntuixnwi3ifma47z2sdegi
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.41.5_react@18.2.0
@@ -2215,6 +2217,29 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: false
+
+  /notistack/2.0.8_22lfntuixnwi3ifma47z2sdegi:
+    resolution: {integrity: sha512-/IY14wkFp5qjPgKNvAdfL5Jp6q90+MjgKTPh4c81r/lW70KeuX6b9pE/4f8L4FG31cNudbN9siiFS5ql1aSLRw==}
+    peerDependencies:
+      '@emotion/react': ^11.4.1
+      '@emotion/styled': ^11.3.0
+      '@mui/material': ^5.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      '@emotion/styled':
+        optional: true
+    dependencies:
+      '@emotion/react': 11.10.5_kzbn2opkn2327fwg5yzwzya5o4
+      '@emotion/styled': 11.10.5_qvatmowesywn4ye42qoh247szu
+      '@mui/material': 5.11.4_lskpmcsdi7ipu6qpuapyu56ihm
+      clsx: 1.2.1
+      hoist-non-react-statics: 3.3.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /object-assign/4.1.1:

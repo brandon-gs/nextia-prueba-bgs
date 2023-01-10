@@ -1,12 +1,15 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 import reducers, { storeMiddlewares } from "./reducers";
+import { rtkQueryErrorLogger } from "./middleware";
 
 export function makeStore() {
   return configureStore({
     reducer: reducers,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({}).concat(storeMiddlewares),
+      getDefaultMiddleware({})
+        .concat(rtkQueryErrorLogger)
+        .concat(storeMiddlewares),
   });
 }
 

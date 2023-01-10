@@ -5,9 +5,11 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import createEmotionCache from "../createEmotionCache";
 import { Provider } from "react-redux";
+import { SnackbarProvider } from "notistack";
 import Head from "next/head";
 import theme from "../theme";
 import store from "../store/store";
+import { SnackbarUtilsConfigurator } from "../components/SnackbarUtilsConfigurator";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -26,8 +28,14 @@ export default function App(props: MyAppProps) {
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ horizontal: "right", vertical: "top" }}
+          >
+            <SnackbarUtilsConfigurator />
+            <CssBaseline />
+            <Component {...pageProps} />
+          </SnackbarProvider>
         </ThemeProvider>
       </CacheProvider>
     </Provider>
