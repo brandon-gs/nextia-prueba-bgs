@@ -21,4 +21,8 @@ app.get("/", (req, res) => {
   return res.json({ message: "API working" });
 });
 
+// This middlewares should be at the end
+app.use(middlewares.notFound);
+app.use(middlewares.errorHandler);
+
 export default app;
