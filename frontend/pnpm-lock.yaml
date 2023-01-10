@@ -19,8 +19,10 @@ specifiers:
   next: 13.1.1
   react: 18.2.0
   react-dom: 18.2.0
+  react-hook-form: ^7.41.5
   redux: ^4.2.0
   typescript: 4.9.4
+  zod: ^3.20.2
 
 dependencies:
   '@emotion/cache': 11.10.5
@@ -41,8 +43,10 @@ dependencies:
   next: 13.1.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-hook-form: 7.41.5_react@18.2.0
   redux: 4.2.0
   typescript: 4.9.4
+  zod: 3.20.2
 
 packages:
 
@@ -2395,6 +2399,15 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-hook-form/7.41.5_react@18.2.0:
+    resolution: {integrity: sha512-DAKjSJ7X9f16oQrP3TW2/eD9N6HOgrmIahP4LOdFphEWVfGZ2LulFd6f6AQ/YS/0cx/5oc4j8a1PXxuaurWp/Q==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -2875,4 +2888,8 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: false
+
+  /zod/3.20.2:
+    resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
     dev: false
