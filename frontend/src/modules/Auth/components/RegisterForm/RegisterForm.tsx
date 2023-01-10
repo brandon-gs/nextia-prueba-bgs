@@ -1,28 +1,36 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import React from "react";
+import AuthLayout from "../AuthLayout/AuthLayout";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { IRegisterSchema, registerSchema } from "./RegisterFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ILoginSchema, loginSchema } from "./LoginFormSchema";
-import { FormInput } from "../../../../components";
-import AuthLayout from "../AuthLayout/AuthLayout";
+import { FormInput, Link } from "../../../../components";
+import Button from "@mui/material/Button";
 
-export default function LoginForm() {
-  const methods = useForm<ILoginSchema>({
-    resolver: zodResolver(loginSchema),
+const RegisterForm = () => {
+  const methods = useForm<IRegisterSchema>({
+    resolver: zodResolver(registerSchema),
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, setError } = methods;
 
-  const onSubmitHandler: SubmitHandler<ILoginSchema> = (values) => {
-    // TODO: Add service to login
-    console.log(values);
+  const onSubmitHandler: SubmitHandler<IRegisterSchema> = (values) => {
+    const numberDepartment = parseInt(values.department);
+    if (isNaN(numberDepartment)) {
+      setError("department", { message: "Debes ingresar un número válido" });
+      return;
+    }
+    const body = {
+      ...values,
+      department: parseInt(values.department),
+    };
+    // TODO: Add service to register a user
+    console.log(body);
   };
 
   return (
@@ -30,7 +38,7 @@ export default function LoginForm() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
-            my: 8,
+            my: 3,
             mx: 4,
             display: "flex",
             flexDirection: "column",
@@ -41,7 +49,7 @@ export default function LoginForm() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Iniciar sesión
+            Crear cuenta
           </Typography>
           <FormProvider {...methods}>
             <Box
@@ -50,6 +58,34 @@ export default function LoginForm() {
               onSubmit={handleSubmit(onSubmitHandler)}
               sx={{ mt: 1 }}
             >
+              <FormInput
+                margin="normal"
+                required
+                fullWidth
+                id="firstname"
+                label="Nombre(s)"
+                name="firstname"
+                autoComplete="firstname"
+                autoFocus
+              />
+              <FormInput
+                margin="normal"
+                required
+                fullWidth
+                id="lastname"
+                label="Apellido(s)"
+                name="lastname"
+                autoComplete="lastname"
+              />
+              <FormInput
+                margin="normal"
+                required
+                fullWidth
+                id="department"
+                label="Número de departamento"
+                name="department"
+                autoComplete="department"
+              />
               <FormInput
                 margin="normal"
                 required
@@ -76,7 +112,7 @@ export default function LoginForm() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Iniciar sesión
+                Registrarse
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -85,8 +121,8 @@ export default function LoginForm() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"¿No tienes una cuenta? Registrate"}
+                  <Link href="/" variant="body2">
+                    {"¿Ya tienes una cuenta? Inicia sesión"}
                   </Link>
                 </Grid>
               </Grid>
@@ -96,4 +132,6 @@ export default function LoginForm() {
       </Grid>
     </AuthLayout>
   );
-}
+};
+
+export default RegisterForm;
