@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import * as middlewares from "./middlewares";
+import api from "./api/";
 
 const app = express();
 
@@ -23,9 +24,8 @@ app.use(
 app.use(express.json());
 
 app.use(middlewares.speedLimiter);
-app.get("/", (req, res) => {
-  return res.json({ message: "API working" });
-});
+
+app.use("/api/v1", api);
 
 // This middlewares should be at the end
 app.use(middlewares.notFound);
