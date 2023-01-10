@@ -63,3 +63,18 @@ export async function register(
     next(err);
   }
 }
+
+export function login(req: Request, res: Response) {
+  const user = req.user as UserWithId;
+
+  const accessToken = createAccessToken(user._id, user.email);
+
+  res.cookie(cookiesConfig.access.name, accessToken);
+
+  res.status(200).json({ log: "Authenticated" });
+}
+
+export function logout(req: Request, res: Response) {
+  res.clearCookie(cookiesConfig.access.name);
+  res.status(200).json({});
+}
