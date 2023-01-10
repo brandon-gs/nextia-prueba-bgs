@@ -13,10 +13,10 @@ export const inter = Inter({
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: "#748BF8",
     },
     secondary: {
-      main: "#19857b",
+      main: "#9BD2DA",
     },
     error: {
       main: red.A400,
