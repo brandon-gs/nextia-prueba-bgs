@@ -12,8 +12,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ILoginSchema, loginSchema } from "./LoginFormSchema";
 import { FormInput } from "../../../../components";
 import AuthLayout from "../AuthLayout/AuthLayout";
+import { useLoginMutation } from "../../Auth.Api";
 
 export default function LoginForm() {
+  const [login, { isLoading }] = useLoginMutation();
+
   const methods = useForm<ILoginSchema>({
     resolver: zodResolver(loginSchema),
   });
@@ -21,8 +24,7 @@ export default function LoginForm() {
   const { handleSubmit } = methods;
 
   const onSubmitHandler: SubmitHandler<ILoginSchema> = (values) => {
-    // TODO: Add service to login
-    console.log(values);
+    login(values);
   };
 
   return (
@@ -75,6 +77,7 @@ export default function LoginForm() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isLoading}
               >
                 Iniciar sesión
               </Button>
