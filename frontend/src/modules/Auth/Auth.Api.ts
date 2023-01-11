@@ -1,9 +1,18 @@
 import { globalApi } from "../../globalApi";
 import { UserState } from "./User.slice";
 import { ILoginSchema } from "./components/LoginForm/LoginFormSchema";
+import { IRegisterSchemaFormated } from "./components/RegisterForm/RegisterFormSchema";
 
 export const authApi = globalApi.injectEndpoints({
   endpoints: (builder) => ({
+    register: builder.mutation<UserState, IRegisterSchemaFormated>({
+      query: (newUser) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: newUser,
+        credentials: "include",
+      }),
+    }),
     login: builder.mutation<UserState, ILoginSchema>({
       query: (credentials) => ({
         url: "/auth/login",
@@ -21,8 +30,9 @@ export const authApi = globalApi.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation } = authApi;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
+  authApi;
 
 export const {
-  endpoints: { login, logout },
+  endpoints: { login, logout, register },
 } = authApi;

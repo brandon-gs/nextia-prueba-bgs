@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthLayout from "../AuthLayout/AuthLayout";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -7,12 +7,21 @@ import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { IRegisterSchema, registerSchema } from "./RegisterFormSchema";
+import {
+  IRegisterSchema,
+  IRegisterSchemaFormated,
+  registerSchema,
+} from "./RegisterFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput, Link } from "../../../../components";
 import Button from "@mui/material/Button";
+import { useRegisterMutation } from "../../Auth.Api";
+import { useRouter } from "next/router";
 
 const RegisterForm = () => {
+  const router = useRouter();
+  const [register, { isLoading, isSuccess }] = useRegisterMutation();
+
   const methods = useForm<IRegisterSchema>({
     resolver: zodResolver(registerSchema),
   });
@@ -25,13 +34,18 @@ const RegisterForm = () => {
       setError("department", { message: "Debes ingresar un número válido" });
       return;
     }
-    const body = {
+    const newUser: IRegisterSchemaFormated = {
       ...values,
       department: parseInt(values.department),
     };
-    // TODO: Add service to register a user
-    console.log(body);
+    register(newUser);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/protected");
+    }
+  }, [isSuccess, router]);
 
   return (
     <AuthLayout>
@@ -111,6 +125,7 @@ const RegisterForm = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isLoading}
               >
                 Registrarse
               </Button>

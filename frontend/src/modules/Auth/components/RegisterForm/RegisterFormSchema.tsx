@@ -20,3 +20,6 @@ export const registerSchema = z.object({
 });
 
 export type IRegisterSchema = z.TypeOf<typeof registerSchema>;
+export type IRegisterSchemaFormated = Omit<IRegisterSchema, "department"> & {
+  department: number;
+};

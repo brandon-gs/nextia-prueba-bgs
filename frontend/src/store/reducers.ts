@@ -8,6 +8,6 @@ const reducers = combineReducers({
   [userSlice.name]: userSlice.reducer,
 });
 
-export const storeMiddlewares = [globalApi.middleware, authApi.middleware];
+export const storeMiddlewares = [globalApi.middleware];
 
 export default reducers;
