@@ -1,9 +1,12 @@
 import { globalApi } from "../../globalApi";
+import { IMessageResponse } from "../../types/MessageResponse";
 import { UserState } from "./User.slice";
+import { IForgotPasswordSchema } from "./components/ForgotPassword/ForgotPasswordSchema";
 import { ILoginSchema } from "./components/LoginForm/LoginFormSchema";
 import { IRegisterSchemaFormated } from "./components/RegisterForm/RegisterFormSchema";
 
 export const authApi = globalApi.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
     register: builder.mutation<UserState, IRegisterSchemaFormated>({
       query: (newUser) => ({
@@ -27,12 +30,34 @@ export const authApi = globalApi.injectEndpoints({
         method: "POST",
       }),
     }),
+    forgotPassword: builder.mutation<IMessageResponse, IForgotPasswordSchema>({
+      query: (body) => ({
+        url: "/auth/forgot-password",
+        method: "POST",
+        body: body,
+      }),
+    }),
+    recoverPassword: builder.mutation<
+      IMessageResponse | void,
+      { token: string; from: string; password: string }
+    >({
+      query: ({ token, from, password }) => ({
+        url: `/auth/recover-password?token=${token}&from=${from}`,
+        method: "POST",
+        body: { password },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  authApi;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useForgotPasswordMutation,
+  useRecoverPasswordMutation,
+} = authApi;
 
 export const {
-  endpoints: { login, logout, register },
+  endpoints: { login, logout, register, forgotPassword, recoverPassword },
 } = authApi;
