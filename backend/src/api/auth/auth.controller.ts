@@ -50,7 +50,11 @@ export async function register(
     res.cookie(cookiesConfig.access.name, accessToken);
 
     res.status(201).json({
-      message: "El usuario ha sido creado",
+      _id: insertResult.insertedId,
+      department: validateResult.department,
+      firstname: validateResult.firstname,
+      lastname: validateResult.lastname,
+      email: validateResult.email,
     });
   } catch (err) {
     if (err instanceof MongoServerError) {
@@ -71,7 +75,7 @@ export function login(req: Request, res: Response) {
 
   res.cookie(cookiesConfig.access.name, accessToken);
 
-  res.status(200).json({ log: "Authenticated" });
+  res.status(200).json(user);
 }
 
 export function logout(req: Request, res: Response) {
