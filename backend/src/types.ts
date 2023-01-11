@@ -7,6 +7,10 @@ declare global {
       MONGODB_URL: string;
       // JWT
       JWT_ACCESS_SECRET: string;
+      // SMTP
+      SMTP_PROVIDER: string;
+      SMTP_EMAIL: string;
+      SMTP_PASSWORD: string;
     }
   }
 }

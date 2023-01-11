@@ -14,12 +14,19 @@ export async function matchPassword(hashPassword: string, password: string) {
   return matches;
 }
 
-export function createAccessToken(id: ObjectId, email: string) {
+export function createAccessToken(
+  id: ObjectId,
+  email: string,
+  expiresIn = "1d",
+) {
   return jwt.sign({ _id: id, email }, jwtConfig.ACCESS_SECRET!, {
-    expiresIn: "1d",
+    expiresIn,
   });
 }
 
 export function decodeUserFromToken(token: string) {
-  return jwt.verify(token, jwtConfig.ACCESS_SECRET!);
+  return jwt.verify(token, jwtConfig.ACCESS_SECRET!) as {
+    _id: ObjectId;
+    email: string;
+  };
 }
