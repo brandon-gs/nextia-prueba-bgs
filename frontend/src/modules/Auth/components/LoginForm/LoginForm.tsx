@@ -32,7 +32,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push("/protected");
+      router.push("/invitation");
     }
   }, [isSuccess, router]);
 

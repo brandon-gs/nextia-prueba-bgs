@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const PRIVATE_ROUTES: Record<string, boolean> = {
-  "/protected": true,
+  "/invitation": true,
 };
 
 const PUBLIC_ROUTES: Record<string, boolean> = {
@@ -31,6 +31,6 @@ export async function middleware(request: NextRequest) {
   }
 
   return isPublicRoute
-    ? NextResponse.redirect(new URL("/protected", request.url))
+    ? NextResponse.redirect(new URL("/invitation", request.url))
     : NextResponse.next();
 }
