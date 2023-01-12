@@ -1,9 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
 import ErrorResponse from "../types/ErrorResponse";
 import { ZodError } from "zod";
+import { CustomError } from "../error";
 
 export function errorHandler(
-  err: Error,
+  err: Error | CustomError,
   req: Request,
   res: Response<ErrorResponse>,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,5 +24,8 @@ export function errorHandler(
   res.json({
     message: err.message,
     stack: process.env.NODE_ENV === "production" ? "🥞" : err.stack,
+    ...("code" in err && {
+      code: err.code,
+    }),
   });
 }
