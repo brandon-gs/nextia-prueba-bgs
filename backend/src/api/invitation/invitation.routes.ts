@@ -9,6 +9,9 @@ router
   .post(requireAuth, invitationController.createInvitation)
   .get(requireAuth, invitationController.getUserInvitations);
 
-router.route("/:id").get(requireAuth, invitationController.getInvitation);
+router
+  .route("/:id")
+  .get(requireAuth, invitationController.getInvitation)
+  .delete(requireAuth, invitationController.deleteInvitation);
 
 export default router;

@@ -97,3 +97,29 @@ export async function getInvitation(
     next(error);
   }
 }
+
+export async function deleteInvitation(
+  req: Request<{ id: string }, {}, {}, {}>,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const user = req.user as UserClientSession;
+
+    const invitationDeleted = await Invitations.deleteOne({
+      ownerId: user._id.toString(),
+      _id: new ObjectId(req.params.id),
+    });
+
+    if (invitationDeleted.deletedCount === 0) {
+      res.status(404);
+      throw new Error("No se encontro la invitación");
+    }
+
+    res.status(200).json({
+      message: "Invitación eliminada",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
