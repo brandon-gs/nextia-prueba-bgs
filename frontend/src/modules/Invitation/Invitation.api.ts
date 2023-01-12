@@ -12,12 +12,21 @@ export const invitationsApi = globalApi.injectEndpoints({
       query: ({ limit, page }) => ({
         url: `/invitation?limit=${limit}&page=${page}`,
       }),
+      providesTags: ["GET_INVITATIONS"],
+    }),
+    deleteInvitation: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/invitation/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["GET_INVITATIONS"],
     }),
   }),
 });
 
-export const { useGetUserInvitationsQuery } = invitationsApi;
+export const { useGetUserInvitationsQuery, useDeleteInvitationMutation } =
+  invitationsApi;
 
 export const {
-  endpoints: { getUserInvitations },
+  endpoints: { getUserInvitations, deleteInvitation },
 } = invitationsApi;

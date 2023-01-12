@@ -37,6 +37,6 @@ export const globalApi = createApi({
     mode: "cors",
     credentials: "include",
   }) as BaseQueryFn<string | FetchArgs, unknown, IGlobalApiErrors, {}>,
-  tagTypes: ["User"],
+  tagTypes: ["GET_INVITATIONS"],
   endpoints: () => ({}),
 });

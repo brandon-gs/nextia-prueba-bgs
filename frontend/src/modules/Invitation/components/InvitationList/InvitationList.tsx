@@ -7,12 +7,23 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useGetUserInvitationsQuery } from "../../Invitation.api";
+import {
+  useDeleteInvitationMutation,
+  useGetUserInvitationsQuery,
+} from "../../Invitation.api";
 import { useState } from "react";
 import { Invitation } from "../../Invitation.schema";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Skeleton from "@mui/material/Skeleton";
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Modal,
+  Typography,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface Column {
   id: keyof Invitation;
@@ -35,15 +46,32 @@ const columns: readonly Column[] = [
 ];
 
 const InvitationList = () => {
+  const [idToDelte, setIdToDelete] = useState<string>("");
+  const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState<number>(0);
+
   const { isLoading, isFetching, data, error, refetch } =
     useGetUserInvitationsQuery({
-      limit: 7,
+      limit: 5,
       page,
     });
 
+  const [deleteInvitation, deleteInvitationStatus] =
+    useDeleteInvitationMutation();
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
+  };
+
+  const onDelete = (id: string) => {
+    setIdToDelete(id);
+    setShowModal(true);
+  };
+
+  const handleDelete = async () => {
+    await deleteInvitation({ id: idToDelte });
+    await refetch();
+    setShowModal(false);
   };
 
   if (error && !data) {
@@ -97,6 +125,7 @@ const InvitationList = () => {
                   {column.label}
                 </TableCell>
               ))}
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -115,6 +144,9 @@ const InvitationList = () => {
                     <TableCell>
                       <Skeleton variant="text" width={170} />
                     </TableCell>
+                    <TableCell>
+                      <Skeleton variant="text" width={40} height={40} />
+                    </TableCell>
                   </TableRow>
                 ))
               : data?.invitations.docs.map((invitation) => {
@@ -129,6 +161,16 @@ const InvitationList = () => {
                       <TableCell>{invitation.guestName}</TableCell>
                       <TableCell>{invitation.startDate}</TableCell>
                       <TableCell>{invitation.endDate}</TableCell>
+                      <TableCell>
+                        <Button
+                          color="error"
+                          variant="contained"
+                          startIcon={<DeleteIcon />}
+                          onClick={() => onDelete(invitation._id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -139,10 +181,47 @@ const InvitationList = () => {
         rowsPerPageOptions={[]}
         component="div"
         count={data?.invitations.totalDocs ?? 0}
-        rowsPerPage={7}
+        rowsPerPage={5}
         page={page}
         onPageChange={handleChangePage}
       />
+      <Modal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <Typography variant="h5" component="h2" align="center" mb={5}>
+            ¿Está seguro que desea eliminarlo?
+          </Typography>
+          <Grid container justifyContent="space-evenly">
+            <Button variant="contained" onClick={() => setShowModal(false)}>
+              Cancelar
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleDelete}
+              disabled={deleteInvitationStatus.isLoading}
+            >
+              Eliminar
+            </Button>
+          </Grid>
+        </Box>
+      </Modal>
     </Paper>
   );
 };
