@@ -5,7 +5,7 @@ import {
   FetchArgs,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/dist/query/react";
-import { Path } from "react-hook-form";
+import { FieldValues, Path } from "react-hook-form";
 
 export type IErrorResponse = {
   message: string;
@@ -19,7 +19,7 @@ export type IApiErrors = {
 export type IValidationErrors<ISchema> = {
   data: {
     validationErrors: Array<{
-      path: [string, Path<ISchema>];
+      path: Array<Path<ISchema & FieldValues>>;
       message: string;
     }>;
   };
