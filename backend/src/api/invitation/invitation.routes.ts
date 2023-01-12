@@ -4,6 +4,9 @@ import { requireAuth } from "../../middlewares/passport";
 
 const router = Router();
 
-router.post("/", requireAuth, invitationController.createInvitation);
+router
+  .route("/")
+  .post(requireAuth, invitationController.createInvitation)
+  .get(requireAuth, invitationController.getUserInvitations);
 
 export default router;
