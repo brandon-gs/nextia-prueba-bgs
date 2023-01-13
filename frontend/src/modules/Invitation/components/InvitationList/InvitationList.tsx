@@ -113,7 +113,10 @@ const InvitationList = () => {
     );
   }
 
-  if (!data || data.invitations.docs.length === 0) {
+  if (
+    !data ||
+    (data.invitations.docs.length === 0 && (!isLoading || !isFetching))
+  ) {
     return (
       <Paper sx={{ width: "100%", height: 440, overflow: "hidden", p: 5 }}>
         <Grid
