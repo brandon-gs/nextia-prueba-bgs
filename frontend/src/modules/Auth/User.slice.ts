@@ -1,13 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { authApi } from "./Auth.Api";
-
-export interface UserState {
-  _id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  department: number;
-}
+import { UserState } from "../../types/User";
 
 const initialState: UserState = {
   _id: "",

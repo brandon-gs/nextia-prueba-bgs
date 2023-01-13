@@ -1,6 +1,6 @@
 import { globalApi } from "../../globalApi";
 import { IMessageResponse } from "../../types/MessageResponse";
-import { UserState } from "./User.slice";
+import { UserState } from "../../types/User";
 import { IForgotPasswordSchema } from "./components/ForgotPassword/ForgotPasswordSchema";
 import { ILoginSchema } from "./components/LoginForm/LoginFormSchema";
 import { IRegisterSchemaFormated } from "./components/RegisterForm/RegisterFormSchema";
