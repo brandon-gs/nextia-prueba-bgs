@@ -17,7 +17,7 @@ export async function matchPassword(hashPassword: string, password: string) {
 export function createAccessToken(
   id: ObjectId,
   email: string,
-  expiresIn = "1d",
+  expiresIn = "7d",
 ) {
   return jwt.sign({ _id: id, email }, jwtConfig.ACCESS_SECRET!, {
     expiresIn,

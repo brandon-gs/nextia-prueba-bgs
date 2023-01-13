@@ -27,11 +27,13 @@ export const userSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        state._id = payload._id;
-        state.department = payload.department;
-        state.email = payload.email;
-        state.firstname = payload.firstname;
-        state.lastname = payload.lastname;
+        return payload;
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.getUser.matchFulfilled,
+      (state, { payload }) => {
+        return payload.user;
       }
     );
   },

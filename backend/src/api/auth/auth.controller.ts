@@ -161,3 +161,15 @@ export async function recoverPassword(
     next(error);
   }
 }
+
+export async function getUser(req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.user) {
+      res.status(401);
+      throw new Error("Sesión expirada");
+    }
+    res.status(200).json({ user: req.user });
+  } catch (error) {
+    next(error);
+  }
+}

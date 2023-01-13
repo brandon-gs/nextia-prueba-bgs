@@ -20,6 +20,6 @@ export const User = z.object({
 });
 
 export type User = z.infer<typeof User>;
-export type UserClientSession = Omit<User, "password">;
 export type UserWithId = WithId<User>;
+export type UserClientSession = Omit<UserWithId, "password">;
 export const Users = db.collection<User>("users");
