@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 
 const PRIVATE_ROUTES: Record<string, boolean> = {
   "/invitation": true,
+  "/invitation/create": true,
 };
 
 const PUBLIC_ROUTES: Record<string, boolean> = {
