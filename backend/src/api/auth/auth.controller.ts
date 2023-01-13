@@ -83,7 +83,7 @@ export function login(req: Request, res: Response) {
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   res.cookie(cookiesConfig.access.name, accessToken, {
     domain:
-      process.env.NODE_ENV === "production" ? ".brandongs.xyz" : ".localhost",
+      process.env.NODE_ENV === "production" ? ".vercel.app" : ".localhost",
     sameSite: "none",
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
