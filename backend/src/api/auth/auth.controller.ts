@@ -94,7 +94,7 @@ export function login(req: Request, res: Response) {
 }
 
 export function logout(req: Request, res: Response) {
-  res.clearCookie(cookiesConfig.access.name, cookiesConfig.access.options);
+  res.clearCookie(cookiesConfig.access.name, cookiesConfig.access.delete);
   res.status(200).json({});
 }
 

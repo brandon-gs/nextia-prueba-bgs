@@ -9,7 +9,7 @@ export const requireAuth = (
 ) => {
   passport.authenticate("jwt", { session: false }, (err, user) => {
     if (err || !user) {
-      res.clearCookie(cookiesConfig.access.name);
+      res.clearCookie(cookiesConfig.access.name, cookiesConfig.access.delete);
       return res.status(401).json({ message: "Sesión caducada" }); // send the error response to client
     }
     req.user = user;
