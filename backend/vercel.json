@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/**/*.ts",
+      "use": "@vercel/node",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "src/index.ts"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "$NODE_ENV",
+    "FRONTEND_URL": "$FRONTEND_URL",
+    "MONGODB_URL": "$MONGODB_URL",
+    "JWT_ACCESS_SECRET": "$JWT_ACCESS_SECRET",
+    "SMTP_PROVIDER": "$SMTP_PROVIDER",
+    "SMTP_EMAIL": "$SMTP_EMAIL",
+    "SMTP_PASSWORD": "$SMTP_PASSWORD"
+  }
+}
