@@ -54,7 +54,11 @@ export async function register(
     );
 
     // Create access token cookie and send it to the client
-    res.cookie(cookiesConfig.access.name, accessToken, { sameSite: "none" });
+    res.cookie(
+      cookiesConfig.access.name,
+      accessToken,
+      cookiesConfig.access.options,
+    );
 
     res.status(201).json({
       _id: insertResult.insertedId,
@@ -80,22 +84,17 @@ export function login(req: Request, res: Response) {
 
   const accessToken = createAccessToken(user._id, user.email);
 
-  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  res.cookie(cookiesConfig.access.name, accessToken, {
-    domain:
-      process.env.NODE_ENV === "production" ? ".vercel.app" : ".localhost",
-    sameSite: "none",
-    secure: process.env.NODE_ENV === "production",
-    httpOnly: true,
-    path: "/",
-    expires,
-  });
+  res.cookie(
+    cookiesConfig.access.name,
+    accessToken,
+    cookiesConfig.access.options,
+  );
 
   res.status(200).json(user);
 }
 
 export function logout(req: Request, res: Response) {
-  res.clearCookie(cookiesConfig.access.name);
+  res.clearCookie(cookiesConfig.access.name, cookiesConfig.access.options);
   res.status(200).json({});
 }
 
