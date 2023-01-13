@@ -47,6 +47,12 @@ export const authApi = globalApi.injectEndpoints({
         body: { password },
       }),
     }),
+    getUser: builder.query<{ user: UserState }, void>({
+      query: () => ({
+        url: "/auth/user",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -56,8 +62,16 @@ export const {
   useRegisterMutation,
   useForgotPasswordMutation,
   useRecoverPasswordMutation,
+  useGetUserQuery,
 } = authApi;
 
 export const {
-  endpoints: { login, logout, register, forgotPassword, recoverPassword },
+  endpoints: {
+    login,
+    logout,
+    register,
+    forgotPassword,
+    recoverPassword,
+    getUser,
+  },
 } = authApi;
