@@ -10,7 +10,7 @@ export const authApi = globalApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation<UserState, IRegisterSchemaFormated>({
       query: (newUser) => ({
-        url: "/auth/login",
+        url: "/auth/register",
         method: "POST",
         body: newUser,
         credentials: "include",
