@@ -1,4 +1,13 @@
-import { Box, Card, CardContent, Grid, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
+import LockIcon from "@mui/icons-material/Lock";
 import React, { FC, useEffect, useState } from "react";
 import InvitationQR from "../InvitationQR/InvitationQR";
 import { useGetInvitationByIdQuery } from "../../Invitation.api";
@@ -6,12 +15,14 @@ import PageLoader from "../../../../components/PageLoader/PageLoader";
 import { formatDateToReadable, getLocalDate } from "../../../../dates";
 import { isAfter } from "date-fns";
 import clsx from "clsx";
+import { useRouter } from "next/router";
 
 interface InvitationDetailsProps {
   id: string;
 }
 
 const InvitationDetails: FC<InvitationDetailsProps> = ({ id }) => {
+  const router = useRouter();
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const { isLoading, isFetching, data, error } = useGetInvitationByIdQuery({
     id,
@@ -29,11 +40,47 @@ const InvitationDetails: FC<InvitationDetailsProps> = ({ id }) => {
     return <PageLoader />;
   }
 
+  if (error && "status" in error && error.status === 403) {
+    return (
+      <Paper sx={{ width: "100%", height: 440, overflow: "hidden", p: 5 }}>
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+          sx={{ height: "100%" }}
+          rowGap={2}
+        >
+          <Grid item>
+            <LockIcon sx={{ fontSize: 160 }} />
+          </Grid>
+          <Grid item>
+            <Typography component="h2" variant="h4" align="center">
+              No tienes permisos para ver está invitación
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            width="100%"
+            sx={{ display: "grid", placeItems: "center" }}
+          >
+            <Button
+              variant="contained"
+              sx={{ maxWidth: 500, width: "100%" }}
+              size="large"
+              onClick={() => router.push("/invitation")}
+            >
+              Ver mis invitaciones
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  }
+
   if (!data) {
     return <PageLoader />;
   }
-
-  console.log(data);
 
   return (
     <Box width="100%" display="flex" justifyContent="center">

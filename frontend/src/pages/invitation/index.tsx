@@ -18,9 +18,7 @@ export default function ListInvitationsPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <InvitationLayout
-        title={`Lista de invitaciones de ${user.firstname || "..."}`}
-      >
+      <InvitationLayout title={`Lista de invitaciones de ${user.firstname}`}>
         <InvitationList />
       </InvitationLayout>
     </>

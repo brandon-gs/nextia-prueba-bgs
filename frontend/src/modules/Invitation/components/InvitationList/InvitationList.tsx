@@ -19,6 +19,7 @@ import { Box, Button, Grid, Modal, Typography } from "@mui/material";
 import { formatDateToReadable } from "../../../../dates";
 import InvitationListOptions from "../InvitationListOptions/InvitationListOptions";
 import InvitationModal from "../InvitationModal/InvitationModal";
+import { useRouter } from "next/router";
 
 interface Column {
   id: keyof Invitation;
@@ -45,6 +46,7 @@ const InvitationList = () => {
   const [showViewModal, setShowViewModal] = useState<boolean>(false);
   const [viewInvitation, setViewInvitation] = useState<null | Invitation>(null);
   const [page, setPage] = useState<number>(0);
+  const router = useRouter();
 
   const { isLoading, isFetching, data, error, refetch } =
     useGetUserInvitationsQuery({
@@ -75,7 +77,7 @@ const InvitationList = () => {
     setShowDeleteModal(false);
   };
 
-  if (error && !data) {
+  if ((error || !data) && (!isLoading || !isFetching)) {
     return (
       <Paper sx={{ width: "100%", height: 440, overflow: "hidden", p: 5 }}>
         <Grid
@@ -104,6 +106,41 @@ const InvitationList = () => {
               onClick={refetch}
             >
               Reintentar
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  }
+
+  if (!data || data.invitations.docs.length === 0) {
+    return (
+      <Paper sx={{ width: "100%", height: 440, overflow: "hidden", p: 5 }}>
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+          sx={{ height: "100%" }}
+          rowGap={5}
+        >
+          <Grid item>
+            <Typography component="h2" variant="h4" align="center">
+              No tienes invitaciones creadas aún
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            width="100%"
+            sx={{ display: "grid", placeItems: "center" }}
+          >
+            <Button
+              variant="contained"
+              sx={{ maxWidth: 500, width: "100%" }}
+              size="large"
+              onClick={() => router.push("/invitation/create")}
+            >
+              Crear una invitación
             </Button>
           </Grid>
         </Grid>
