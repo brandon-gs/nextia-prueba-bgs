@@ -8,7 +8,7 @@ const PageLoader: FC<BoxProps> = ({ sx, ...boxProps }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%",
+        height: "80%",
         width: "100%",
         ...sx,
       }}

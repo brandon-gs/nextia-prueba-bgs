@@ -57,7 +57,10 @@ export default function InvitationListOptions({
         open={open}
         onClose={handleClose}
       >
-        <MenuItem disableRipple onClick={() => router.push("/invitation")}>
+        <MenuItem
+          disableRipple
+          onClick={() => router.push(`/invitation/view/${invitation._id}`)}
+        >
           <PreviewIcon />
           Ver detalle
         </MenuItem>

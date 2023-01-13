@@ -82,14 +82,6 @@ export async function getInvitation(
       );
     }
 
-    const expirationDate = new Date(invitation.endDate);
-    const currentDate = new Date(new Date().toISOString());
-
-    if (currentDate > expirationDate) {
-      res.status(403);
-      throw new CustomError("La invitación ha expirado.", "expired");
-    }
-
     res.status(200).json({
       invitation,
     });
