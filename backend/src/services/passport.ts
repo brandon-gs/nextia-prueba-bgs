@@ -28,7 +28,8 @@ const localLogin = new LocalStrategy(
     if (!matchPasswords) {
       return done(null, false, { message: "Credenciales incorrectas" });
     }
-    return done(null, user);
+    const { password: noPassword, ...clientUser } = user;
+    return done(null, clientUser);
   },
 );
 
