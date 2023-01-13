@@ -51,7 +51,7 @@ const InvitationCreateForm = () => {
       const invitation = await createInvitation(body).unwrap();
       setInvitation(invitation.invitation);
       setShowModal(true);
-      reset();
+      reset({ guestName: "" });
     } catch (error) {}
   };
 
