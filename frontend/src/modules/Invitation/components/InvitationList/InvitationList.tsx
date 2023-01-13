@@ -15,15 +15,10 @@ import { useState } from "react";
 import { Invitation } from "../../Invitation.schema";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Skeleton from "@mui/material/Skeleton";
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Modal,
-  Typography,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button, Grid, Modal, Typography } from "@mui/material";
+import { formatDateToReadable } from "../../../../dates";
+import InvitationListOptions from "../InvitationListOptions/InvitationListOptions";
+import InvitationModal from "../InvitationModal/InvitationModal";
 
 interface Column {
   id: keyof Invitation;
@@ -41,13 +36,14 @@ const columns: readonly Column[] = [
     id: "endDate",
     label: "Fecha de finalización",
     minWidth: 170,
-    // format: (value: number) => value.toLocaleString("en-US"),
   },
 ];
 
 const InvitationList = () => {
   const [idToDelte, setIdToDelete] = useState<string>("");
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState<boolean>(false);
+  const [viewInvitation, setViewInvitation] = useState<null | Invitation>(null);
   const [page, setPage] = useState<number>(0);
 
   const { isLoading, isFetching, data, error, refetch } =
@@ -65,13 +61,18 @@ const InvitationList = () => {
 
   const onDelete = (id: string) => {
     setIdToDelete(id);
-    setShowModal(true);
+    setShowDeleteModal(true);
   };
 
   const handleDelete = async () => {
     await deleteInvitation({ id: idToDelte });
     await refetch();
-    setShowModal(false);
+    closeDeleteModal();
+  };
+
+  const closeDeleteModal = () => {
+    setIdToDelete("");
+    setShowDeleteModal(false);
   };
 
   if (error && !data) {
@@ -159,17 +160,21 @@ const InvitationList = () => {
                     >
                       <TableCell>{invitation._id}</TableCell>
                       <TableCell>{invitation.guestName}</TableCell>
-                      <TableCell>{invitation.startDate}</TableCell>
-                      <TableCell>{invitation.endDate}</TableCell>
                       <TableCell>
-                        <Button
-                          color="error"
-                          variant="contained"
-                          startIcon={<DeleteIcon />}
-                          onClick={() => onDelete(invitation._id)}
-                        >
-                          Delete
-                        </Button>
+                        {formatDateToReadable(invitation.startDate)}
+                      </TableCell>
+                      <TableCell>
+                        {formatDateToReadable(invitation.endDate)}
+                      </TableCell>
+                      <TableCell>
+                        <InvitationListOptions
+                          invitation={invitation}
+                          onDelete={onDelete}
+                          onView={(invitation) => {
+                            setViewInvitation(invitation);
+                            setShowViewModal(true);
+                          }}
+                        />
                       </TableCell>
                     </TableRow>
                   );
@@ -185,9 +190,17 @@ const InvitationList = () => {
         page={page}
         onPageChange={handleChangePage}
       />
+      <InvitationModal
+        open={showViewModal}
+        onClose={() => {
+          setShowViewModal(false);
+          setViewInvitation(null);
+        }}
+        invitation={viewInvitation}
+      />
       <Modal
-        open={showModal}
-        onClose={() => setShowModal(false)}
+        open={showDeleteModal}
+        onClose={closeDeleteModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -208,7 +221,7 @@ const InvitationList = () => {
             ¿Está seguro que desea eliminarlo?
           </Typography>
           <Grid container justifyContent="space-evenly">
-            <Button variant="contained" onClick={() => setShowModal(false)}>
+            <Button variant="contained" onClick={closeDeleteModal}>
               Cancelar
             </Button>
             <Button
