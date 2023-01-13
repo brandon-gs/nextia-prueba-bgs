@@ -14,6 +14,17 @@ export const invitationsApi = globalApi.injectEndpoints({
       }),
       providesTags: ["GET_INVITATIONS"],
     }),
+    createInvitation: builder.mutation<
+      { message: string; invitation: Invitation },
+      { startDate: string; endDate: string; guestName: string }
+    >({
+      query: (body) => ({
+        url: "/invitation",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["GET_INVITATIONS"],
+    }),
     deleteInvitation: builder.mutation<void, { id: string }>({
       query: ({ id }) => ({
         url: `/invitation/${id}`,
@@ -24,9 +35,12 @@ export const invitationsApi = globalApi.injectEndpoints({
   }),
 });
 
-export const { useGetUserInvitationsQuery, useDeleteInvitationMutation } =
-  invitationsApi;
+export const {
+  useGetUserInvitationsQuery,
+  useDeleteInvitationMutation,
+  useCreateInvitationMutation,
+} = invitationsApi;
 
 export const {
-  endpoints: { getUserInvitations, deleteInvitation },
+  endpoints: { getUserInvitations, deleteInvitation, createInvitation },
 } = invitationsApi;
