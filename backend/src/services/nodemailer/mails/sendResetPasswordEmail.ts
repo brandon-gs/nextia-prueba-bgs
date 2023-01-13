@@ -21,6 +21,7 @@ const sendResetPasswordEmail = async (
     html: `<div><h4>Hola ${name}👋,</h4></div>
         <div>
         <p>Para continuar con tu reinicio de contraseña te pedimos hagas click en el link de abajo:</p>
+        <p>Este link caducará en 10 minutos</p>
         </div>
         <div><a href='${link}' alt="activation link">${link}</a></div>`,
   });
